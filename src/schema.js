@@ -3,6 +3,7 @@
  */
 import Member from './models/Member/memberSchema'
 import {makeExecutableSchema} from 'graphql-tools'
+import {MemberDao} from './couchdb'
 
 const RootQuery =  `
     type RootQuery {
@@ -30,11 +31,15 @@ const members  = [
         bio: 'Im musa, I like to rap'
     }
 ]
+const dao = new MemberDao();
 
 const resolverMap = {
     RootQuery: {
         allMembers(obj, args, context){
-            return members
+           // console.log("hi")
+           // console.log(dao)
+            console.log(dao.getMembers('budfam').then(data => data))
+            return dao.getMembers('budfam').then( data => data )
         }
     }
 }

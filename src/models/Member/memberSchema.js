@@ -4,13 +4,10 @@
 
 const Member = `
     type Member {
-        id: ID!
-        familyId: ID!
         name : String!
         relation: String!
         bio: String
     }
 `
-
 
 export default  Member

@@ -20,7 +20,6 @@ var _schema2 = _interopRequireDefault(_schema);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//const schema = makeExecutableSchema({typeDefs, resolvers})
 var app = (0, _express2.default)(); /**
                                      * Created by beggl on 11/1/2017.
                                      */

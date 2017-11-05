@@ -10,12 +10,14 @@ var _memberSchema2 = _interopRequireDefault(_memberSchema);
 
 var _graphqlTools = require('graphql-tools');
 
+var _couchdb = require('./couchdb');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Created by beggl on 11/4/2017.
- */
-var RootQuery = '\n    type RootQuery {\n        allMembers: [Member!]\n    }\n';
+var RootQuery = '\n    type RootQuery {\n        allMembers: [Member!]\n    }\n'; /**
+                                                                                   * Created by beggl on 11/4/2017.
+                                                                                   */
+
 var SchemaDefinition = '\n    schema {\n        query: RootQuery\n    }';
 
 var members = [{
@@ -31,11 +33,19 @@ var members = [{
     name: 'Musa Smith',
     bio: 'Im musa, I like to rap'
 }];
+var dao = new _couchdb.MemberDao();
 
 var resolverMap = {
     RootQuery: {
         allMembers: function allMembers(obj, args, context) {
-            return members;
+            // console.log("hi")
+            // console.log(dao)
+            console.log(dao.getMembers('budfam').then(function (data) {
+                return data;
+            }));
+            return dao.getMembers('budfam').then(function (data) {
+                return data;
+            });
         }
     }
 };

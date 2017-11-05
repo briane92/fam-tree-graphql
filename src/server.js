@@ -6,8 +6,6 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import schema from './schema'
-
-//const schema = makeExecutableSchema({typeDefs, resolvers})
 const app = express()
 
 app.options('*', cors())
