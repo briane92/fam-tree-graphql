@@ -6,10 +6,27 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import schema from './schema'
-const app = express()
+import connectMongo from './mongo-connector'
+require('babel-polyfill');
 
-app.options('*', cors())
-app.use(cors())
-app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
-app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
-app.listen(4000, ()=> console.log("Now browse to localhost:4000/graphiql"))
+
+const start = async () => {
+    const mongo = await connectMongo()
+
+    const buildOptions = (res) => {
+        const headers = res.headers
+        return { context: {headers , mongo}, schema }
+    }
+
+    const app = express()
+    app.options('*', cors())
+    app.use(cors())
+    app.use('/graphql', bodyParser.json(), graphqlExpress( buildOptions))
+    app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
+    app.listen(4000, ()=> console.log("Now browse to localhost:4000/graphiql"))
+
+
+}
+start()
+
+
